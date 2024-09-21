@@ -1,9 +1,4 @@
 ﻿using News.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net.Http.Json;
 
 namespace News.Services
@@ -22,7 +17,7 @@ namespace News.Services
         public async Task<NewsResult> GetNews(NewsScope scope)
         {
             NewsResult result;
-            string url = ""; // GetUrl(scope);
+            string url = GetUrl(scope);
 
             try
             {
@@ -38,15 +33,35 @@ namespace News.Services
             return result;
         }
 
-        
+        private string GetUrl(NewsScope scope) => scope switch
+        {
+            NewsScope.Headlines => Headlines,
+            NewsScope.Global => Global,
+            NewsScope.Local => Local,
+            _ => throw new Exception("Undefined scope")
+        };
+
+        private static string Headlines => $"{UriBase}/top-headlines?country=us&apiKey={Settings.NewsApiKey}";
+        private static string Local => $"{UriBase}/everything?q=local&apiKey={Settings.NewsApiKey}";
+        private static string Global => $"{UriBase}/everything?q=global&apiKey={Settings.NewsApiKey}";
+
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    httpClient.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
 
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            //Dispose(true);
+            Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-
-
     }
 }
