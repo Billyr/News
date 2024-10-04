@@ -13,7 +13,6 @@ namespace News.Services
             DefaultRequestHeaders = { { "user-agent", "mauiprojects-news/1.0" } }
         };
 
-
         public async Task<NewsResult> GetNews(NewsScope scope)
         {
             NewsResult result;

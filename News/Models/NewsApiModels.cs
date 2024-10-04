@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace News.Models
 {
@@ -54,7 +49,7 @@ namespace News.Models
         public string Status { get; set; }
 
         [JsonPropertyName("totalResults")]
-        public string TotalResults { get; set; }
+        public int TotalResults { get; set; }
 
         [JsonPropertyName("articles")]
         public List<Article> Articles { get; set; }

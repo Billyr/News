@@ -27,13 +27,17 @@ namespace News
 
         public static MauiAppBuilder RegisterAppTypes(this MauiAppBuilder mauiAppBuilder) 
         { 
+            // Services
+            mauiAppBuilder.Services.AddSingleton<Services.INewsService>(serviceProvider => new Services.NewsService());
+            mauiAppBuilder.Services.AddSingleton<ViewModels.INavigate>( _ => new Navigator());
+
             // Add ViewModels to services
             mauiAppBuilder.Services.AddTransient<ViewModels.HeadlinesViewModel>();
 
             // Add Views to services
-            mauiAppBuilder.Services.AddTransient<Views.HeadlinesView>();
-            mauiAppBuilder.Services.AddTransient<Views.ArticleItem>();
             mauiAppBuilder.Services.AddTransient<Views.AboutView>();
+            mauiAppBuilder.Services.AddTransient<Views.ArticleItem>();
+            mauiAppBuilder.Services.AddTransient<Views.HeadlinesView>();
 
             return mauiAppBuilder;
         }
